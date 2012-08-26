@@ -13,6 +13,9 @@ sdist
 develop-eggs
 .installed.cfg
 
+# Vim
+*.swp
+
 # Installer logs
 pip-log.txt
 

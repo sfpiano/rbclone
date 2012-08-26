@@ -1,0 +1,16 @@
+{% extends "diff/diff-base.html" %}
+
+{% block header %}
+{{block.super}}
+<h1>Comments for {{ name }}</h1>
+{% endblock %}
+
+{% block mainpanel %}
+<table>
+<tbody>
+  {% for comment in comments %}
+  <tr><td>{{comment}}</td></tr>
+  {% endfor %}
+</tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<% self.seen_css = set() %>
+<% self.seen_js = set() %>
+
+<%def name="css_link(path, media='')">
+  % if path not in self.seen_css:
+    <link rel="stylesheet" type="text/css" href="${path|h}" media="${media}"></link>
+  % endif
+  ##<% self.seen_scripts.add(path) %>
+</%def>
+<%def name="js_link(path)">
+  % if path not in self.seen_js:
+    <script type="text/javascript" src="${path|h}"></script>
+  % endif
+  ##<% self.seen_scripts.add(path) %>
+</%def>
+ 
+<%def name="css()">
+  ${css_link('/static/css/style.css', 'screen')}
+</%def>
+<%def name="js()">
+  ${js_link('/static/js/jquery-1.7.2.min.js')}
+</%def>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+<head>
+  <title><%block name="title"/> | Review</title>
+
+  ${self.css()}
+  <%block name="extracss"/>
+
+  ${self.js()}
+  <%block name="scripts"/>
+
+  <%block name="extrahead"/>
+</head>
+
+<body>
+  <div id="wrap">
+    <div id="header">
+      <table class="topbanner">
+        <tr>
+          <td style="text-align: left">
+            <%block name="crumbs"/>
+          </td>
+          <td style="text-align: right">
+            <a href=
+            % if user.is_authenticated:
+              "logout">Logout
+            % else:
+              "login">Login
+            % endif
+            </a>
+          </td>
+        </tr>
+      </table>
+      <%block name="header"/>
+      <%block name="options"/>
+    </div>
+
+    <!-- Center container -->
+    <div id="container-main">
+      <%block name="content_middle"/>
+    </div>
+
+    <div id="footer">
+      <%block name="footer">
+      <p>Footer</p>
+      </%block>
+    </div>
+  </div><!-- wrap -->
+</body>
+</html>

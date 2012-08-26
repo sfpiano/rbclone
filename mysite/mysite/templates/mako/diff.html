@@ -1,0 +1,105 @@
+<%inherit file="diff-base.html"/>
+
+<%block name="title">${parent.title()}Diff</%block>
+
+<%def name="css()">
+  ${parent.css()}
+  ${self.css_link('/static/css/pygments.css', 'screen')}
+  ${self.css_link('/static/css/themes/base/jquery.ui.all.css', 'screen')}
+</%def>
+<%def name="js()">
+  ${parent.js()}
+  ${self.js_link('/static/js/jquery-ui-1.8.19.custom.min.js')}
+</%def>
+
+<%block name="scripts">
+  <script type="text/javascript">
+    function toggleRegion(rowid)
+    {
+      $('#chunk' + rowid + ' tr').slice(1).toggle();
+    }
+    function addNewComment(lineNumber, comment, commentId)
+    {
+      $('#commentForm :input#id_line_number').val(lineNumber);
+      if (typeof comment !== "undefined") {
+        $('#commentForm :input#id_message').val(comment);
+        $('#commentForm :input#comment_id').val(commentId);
+      }
+      $( "#dialog" ).dialog("open");
+    }
+  </script>
+  <script type="text/javascript">
+    $(function() {
+      $( "#dialog" ).dialog({
+         autoOpen: false
+      });
+    });
+  </script>
+</%block>
+
+<%block name="header">${parent.header()}
+  <h1>${diffset.name}</h1>
+  <h2 style="color: ${diffset.get_status_html()}">${diffset.get_status_display()}</h2>
+  %if is_reviewer:
+    <a href="/diff/${set_id}/gtg">GTG</a>
+  %endif
+</%block>
+
+<%block name="mainpanel">
+<div class="highlight">
+  <table class="diff">
+
+    <tbody id="Header">
+    <tr><th></th><th>Old</th><th></th><th>New</th></tr>
+    </tbody>
+
+    % for chunk in chunks:
+      <tbody id="chunk${loop.index}">
+      % for line in chunk['lines']:
+        <tr>
+        <th>
+          %if chunk['collapsable'] and loop.first:
+            <a href="#" onclick="toggleRegion('${loop.parent.index}'); return false;">[-]</a>
+          %endif
+        </th>
+        <th>${line[0]}</th>
+        <td class="${chunk['change']}">${line[2]}</td>
+        <th><a href="#" onclick="addNewComment(${line[4]}); return false;">${line[4]}</a></th>
+        <td class="${chunk['change']}">${line[5]}</td>
+        </tr>
+
+        %if line[8] != None:
+          <tr class="commentHolder">
+            <td colspan="5">
+              %for comment in line[8]:
+              ##<div class="comment {%if loop.first:  comment-reply %endif}">
+              <div class="comment">
+                <p>${comment.user_id}:</p>
+                <p>${comment.comment} <a href="#" onclick="addNewComment(${line[4]}); return false;">[Reply]</a>
+                %if str(comment.user_id) == str(user):
+                  <a href="#" onclick="addNewComment(${line[4]}, '${comment.comment}', ${comment.id}); return false;">[Edit]</a>
+                  <a href="/diff/comment/${comment.id}">[Delete]</a>
+                %endif
+                </p>
+              </div>
+              %endfor
+            </td>
+          </tr>
+        %endif
+      % endfor // line in chunk[lines]
+      </tbody>
+    % endfor // chunk in chunks
+  </table>
+</div>
+
+<!--Begin Test-->
+<div class="demo">
+  <div id="dialog" title="Basic dialog">
+    <p>This is the default dialog which is useful for displaying information.</p>
+    <p>The dialog window can be moved, resized and closed with the 'x' icon.</p>
+    <%include file="comment-form.html"/>
+  </div>
+</div>
+<!--End Test-->
+
+</%block>

@@ -1,0 +1,15 @@
+    <h1>Contact us</h1>
+
+    {% if form.errors %}
+        <p style="color: red;">
+            Please correct the error{{ form.errors|pluralize }} below.
+        </p>
+    {% endif %}
+
+    <form action="{% url createComment set_id file_id %}" method="post" id="commentForm">{% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="hidden" name="comment_id" id="comment_id" value="0">
+        <input type="submit" name="create" value="Submit">
+    </form>

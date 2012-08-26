@@ -1,0 +1,134 @@
+{% load staticfiles %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+<head>
+  <title>Title</title>
+  <link rel="stylesheet" href="{% static "css/layout.css" %}" type="text/css" media="screen" />
+  <link rel="stylesheet" href="{% static "css/tree.css" %}" type="text/css" media="screen" />
+  <link rel="stylesheet" href="{% static "css/style.css" %}" type="text/css" media="screen" />
+  <link rel="stylesheet" href="{% static "css/pygments.css" %}" type="text/css" media="screen" />
+
+  <style type="text/css"> 
+    th{font-size:10pt;} 
+    td{font-size:9pt;}
+    table .insert {background-color: #99FFB6;}
+    table .delete {background-color: #FF9999;}
+    table .replace {background-color: #FFFEB2;}
+  </style>
+
+  <script type="text/javascript" src="{% static "js/jquery-1.7.2.min.js" %}"></script>
+  <script type="text/javascript">
+    function toggleRegion(rowid)
+    {
+      var elem = $('table tr.collapsable' + rowid);
+      if ($(elem).is(":visible")) { $(elem).hide(); }
+      else{ $(elem).show(); }
+    }
+  </script>
+</head>
+
+<body>
+
+<div id="header">
+  <p><a href="#" title="Home">Home</a> &raquo; <a href="#" title="Reviews">Reviews</a> &raquo; TCSU_LCR_XXXXX</p>
+  <h1>{{ diffset.name }}</h1>
+  <!---<h2>Subtitle</h2>
+  <ul>
+    <li><a href="#">Tab <span>1</span></a></li>
+    <li><a href="#">Tab <span>2</span></a></li>
+  </ul>-->
+  <p id="layoutdims">Options: <a href="#">Option 1</a> | <a href="#">Option 2</a> | <strong>Option 3</strong></p>
+</div>
+
+<div class="colmask leftmenu">
+  <div class="colleft">
+    <div class="col1">
+      <!-- Column 1 start -->
+      <div class="highlight">
+        <table>
+        <tbody>
+
+        {% for chunk in chunksDebug %}
+        <p>
+          {#{{ chunk }}#}
+        </p>
+        {% endfor %}
+
+        <tr><th></th><th>Old</th><th></th><th>New</th></tr>
+
+        {% for chunk in chunks %}
+          {% with outerIndex=forloop.counter0 %}
+          {% for line in chunk.lines %}
+            <tr
+            {% if chunk.collapsable and not forloop.first %}
+              class="collapsable{{ outerIndex }}"
+            {% endif %}
+            >
+            <th>
+            {% if chunk.collapsable and forloop.first %}
+              <a href="#" onclick="toggleRegion('{{ outerIndex }}');">P</a>
+            {% endif %}
+            </th>
+            <th>{{ line.0 }}</th><td class="{{ chunk.change }}">{{ line.2 }}</td>
+            <th><a href="#" onclick="addNewComment();">{{ line.4 }}</a></th><td class="{{ chunk.change }}">{{ line.5 }}</td>
+            {#{% if chunk.change == 'insert' %}#}
+            {#  <td></td>#}
+            {#  <th>{{ line.4 }}</th><td class="{{ chunk.change }}">{{ line.5 }}</td>#}
+            {#{% elif chunk.change == 'delete' %}#}
+            {#  <td class="{{ chunk.change }}">{{ line.2 }}</td>#}
+            {#  <th>{{ line.4 }}</th><td></td>#}
+            {#{% elif chunk.change == 'replace' %}#}
+            {#  <td class="{{ chunk.change }}">{{ line.2 }}</td>#}
+            {#  <th>{{ line.4 }}</th><td class="{{ chunk.change }}">{{ line.5 }}</td>#}
+            {#{% else %}#}
+            {#  <td class="same">{{ line.2 }}</td>#}
+            {#  <th>{{ line.4 }}</th><td class="same">{{ line.5 }}</td>#}
+            {#{% endif %}#}
+            </tr>
+            {% ifnotequal line.8 None %}
+              <tr class="commentHolder">
+                <td colspan="5">
+                  {% for comment in line.8 %}
+                  <div class="comment{% if not forloop.first %} comment-reply{% endif %}">
+                    <p>{{ comment.user_id }}:</p>
+                    <p>{{ comment.comment }}</p>
+                  </div>
+                  {% endfor %}
+                </td>
+              </tr>
+            {% endifnotequal %}
+          {% endfor %}
+          {% endwith %}
+        {% endfor %}
+
+        <th colspan="4">diff view generated</th>
+        </tbody>
+        </table>
+      </div>
+      <!-- Column 1 end -->
+    </div>
+    <div class="col2">
+      <!-- Column 2 start -->
+      <ol class="tree">
+        <li><a href="#">Overview</a></li>
+        <li><a href="#">Comments</a></li>
+        <li>
+          <label for="subfolder1">Subfolder 1</label>
+          <input type="checkbox" checked="yes" id="subfolder1" />
+          <ol>
+          {% for file in allfiles %}
+            <li class="file"><a href="/diff/{{ file.id }}/diff">{{ file.get_name }}</a></li>
+          {% endfor %}
+          </ol>
+        </li>
+      </ol>
+      <!-- Column 2 end -->
+    </div>
+  </div>
+</div>
+<div id="footer">
+  <p>Footer</p>
+</div>
+
+</body>
+</html>

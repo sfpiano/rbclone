@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{% load staticfiles %}
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+<head>
+  <title>{% block title %}{% endblock %} | Review</title>
+
+  {% block css %}
+  <link rel="stylesheet" href="{% static "css/layout.css" %}" type="text/css" media="screen" />
+  {% endblock %}
+
+  <script type="text/javascript" src="{% static "js/jquery-1.7.2.min.js" %}"></script>
+  {% block scripts %}{% endblock %}
+
+  {% block extrahead %}{% endblock %}
+</head>
+
+<body>
+  <div id="header">
+    {% block header %}
+      <p id="loginBanner"><a href=
+      {% if user.is_authenticated %}"{% url logout %}">Logout
+      {% else %}"{% url login %}">Login
+      {% endif %}
+      </a>
+      </p>
+    {% endblock %}
+  </div>
+
+  <div class="colmask leftmenu">
+    {% block content_middle %}
+    {% endblock %}
+  </div>
+
+  <div id="footer">
+    {% block footer %}
+    <p>Footer</p>
+    {% endblock %}
+  </div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<%inherit file="default-layout.html"/>
+
+<%def name="css()">
+  ${self.css_link('/static/css/tree.css', 'screen')}
+  ${self.css_link('/static/css/style.css', 'screen')}
+</%def>
+
+<%block name="sidebar">
+${parent.sidebar()}
+<ol class="tree">
+  <li><a href="/r/${diffset.id}/overview">Overview</a></li>
+  <li><a href="/r/${diffset.id}/comments">Comments</a></li>
+  <li>
+    <label for="subfolder1">Subfolder 1</label>
+    <input type="checkbox" checked="yes" id="subfolder1" />
+    <ol>
+    %for file in allfiles:
+      <li class="file"><a href="/r/${diffset.id}/diff/${file.id}">${file.get_name()}</a></li>
+    %endfor
+    </ol>
+  </li>
+</ol>
+</%block>

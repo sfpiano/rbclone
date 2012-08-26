@@ -1,0 +1,121 @@
+{% extends "diff/diff-base.html" %}
+{% load staticfiles %}
+
+{% block title %}{{block.super}}Diff{% endblock %}
+
+{% block css %} {{block.super}}
+<link rel="stylesheet" href="{% static "css/pygments.css" %}" type="text/css" media="screen" />
+
+<link rel="stylesheet" href="{% static "css/themes/base/jquery.ui.all.css" %}" type="text/css" media="screen" />
+{% endblock %}
+
+{% block extrahead %}
+  <style type="text/css"> 
+    th{font-size:10pt;} 
+    td{font-size:9pt;}
+    table .insert {white-space: pre; background-color: #99FFB6;}
+    table .delete {white-space: pre; background-color: #FF9999;}
+    table .replace {white-space: pre; background-color: #FFFEB2;}
+    table .equal {white-space: pre;}
+  </style>
+{% endblock %}
+
+{% block scripts %}
+  <script type="text/javascript" src="{% static "js/jquery-ui-1.8.19.custom.min.js" %}"></script>
+  <script type="text/javascript">
+    function toggleRegion(rowid)
+    {
+      $('#chunk' + rowid + ' tr').slice(1).toggle();
+    }
+    function addNewComment(lineNumber, comment, commentId)
+    {
+      $('#commentForm :input#id_line_number').val(lineNumber);
+      if (typeof comment !== "undefined") {
+        $('#commentForm :input#id_message').val(comment);
+        $('#commentForm :input#comment_id').val(commentId);
+      }
+      $( "#dialog" ).dialog("open");
+    }
+  </script>
+  <script type="text/javascript">
+    $(function() {
+      $( "#dialog" ).dialog({
+         autoOpen: false
+      });
+    });
+  </script>
+{% endblock %}
+
+{% block header %}{{block.super}}
+  <h1>{{ diffset.name }}</h1>
+  <h2>{{ diffset.get_status_display }}</h2>
+  {% if is_reviewer %}<a href="/diff/{{set_id}}/gtg">GTG</a>{% endif %}
+{% endblock %}
+
+{% block mainpanel %}
+<div class="highlight">
+  <table>
+
+  {#{% for chunk in chunksDebug %} <p> {{ chunk }} </p> {% endfor %}#}
+
+  <tbody id="Header">
+  <tr><th></th><th>Old</th><th></th><th>New</th></tr>
+  </tbody>
+
+  {% for chunk in chunks %}
+    {% with outerIndex=forloop.counter0 %}
+    {% with change=chunk.change %}
+    <tbody id="chunk{{outerIndex}}">
+    {% for line in chunk.lines %}
+      <tr>
+      <th>
+      {# .4s #}
+      {#{% if chunk.collapsable and forloop.first %}#}
+      {#  <a href="#" onclick="toggleRegion('{{ outerIndex }}'); return false;">[-]</a>#}
+      {#{% endif %}#}
+      </th>
+      <th>{{line.0}}</th><td class="{{change}}">{{line.2}}</td>
+      <th><a href="#" onclick="addNewComment({{line.4}}); return false;">{{line.4}}</a></th><td class="{{change}}">{{line.5}}</td>
+      {#<th>{{ line.0 }}</th><td class="{{ chunk.change }}">{{ line.2 }}</td>#}
+      {#<th><a href="#" onclick="addNewComment({{line.4}}); return false;">{{ line.4 }}</a></th><td class="{{ chunk.change }}">{{ line.5 }}</td>#}
+      </tr>
+      {# .8s #}
+      {#{% ifnotequal line.8 None %}#}
+      {#  <tr class="commentHolder">#}
+      {#    <td colspan="5">#}
+      {#      {% for comment in line.8 %}#}
+      {#      <div class="comment{% if not forloop.first %} comment-reply{% endif %}">#}
+      {#        <p>{{ comment.user_id }}:</p>#}
+      {#        <p>{{ comment.comment }} <a href="#" onclick="addNewComment({{line.4}}); return false;">[Reply]</a>#}
+      {#        {% ifequal comment.user_id user %}#}
+      {#        <a href="#" onclick="addNewComment({{line.4}}, '{{comment.comment}}', {{comment.id}}); return false;">[Edit]</a>#}
+      {#        <a href="/diff/comment/{{comment.id}}">[Delete]</a>#}
+      {#        {% endifequal %}#}
+      {#        </p>#}
+      {#      </div>#}
+      {#      {% endfor %}#}
+      {#    </td>#}
+      {#  </tr>#}
+      {#{% endifnotequal %} {#line.8 != None#}
+    {% endfor %} {#line in chunk.lines#}
+    </tbody>
+    {% endwith %} {#outerIndex#}
+    {% endwith %} {#outerIndex#}
+  {% endfor %} {#chunk in chunks#}
+
+  <th colspan="4">diff view generated</th>
+  </tbody>
+  </table>
+</div>
+
+<!--Begin Test-->
+<div class="demo">
+  <div id="dialog" title="Basic dialog">
+    <p>This is the default dialog which is useful for displaying information.</p>
+    <p>The dialog window can be moved, resized and closed with the 'x' icon.</p>
+    {% include "diff/comment_form.html" %}
+  </div>
+</div>
+<!--End Test-->
+
+{% endblock %}{#mainpanel#}

@@ -1,0 +1,30 @@
+<%inherit file="base.html"/>
+
+<%block name="header">${parent.header()}
+  <%block name="crumbs">
+  <a href="/" title="Home">Home</a> &raquo; <a href="/r" title="Reviews">Reviews</a> &raquo; TCSU_LCR_XXXXX </td>
+  </%block>
+</%block>
+
+<%block name="options">
+<div id="optionsbar">
+  Options: <a href="#">Option 1</a> | <a href="#">Option 2</a> | <strong>Option 3</strong>
+</div>
+</%block>
+
+<%block name="content_middle">
+<div id="container-sidebar">
+  <div id="sidebar">
+    <%block name="sidebar">
+    <!-- Column 2 start -->
+    <!-- Column 2 end -->
+    </%block>
+  </div>
+  <div id="main">
+    <%block name="mainpanel">
+    <!-- Column 1 start -->
+    <!-- Column 1 end -->
+    </%block>
+  </div>
+</div>
+</%block>

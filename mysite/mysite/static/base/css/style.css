@@ -1,0 +1,139 @@
+body, html {
+  margin:0;
+  padding:0;
+
+  background-color: #0480B5;
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#0B3041), to(#0480B5));
+  background-image: -webkit-linear-gradient(top, #0B3041, #0480B5);
+  background-image:    -moz-linear-gradient(top, #0B3041, #0480B5);
+  background-image:     -ms-linear-gradient(top, #0B3041, #0480B5);
+  background-image:      -o-linear-gradient(top, #0B3041, #0480B5);
+
+  color: #FFF;
+
+  font-family: "Tahoma", sans-serif;
+}
+
+#wrap {
+  width:90%;
+  margin:0 auto;
+}
+
+#header {
+  padding:5px 10px;
+}
+table.topbanner {
+  width: 100%;
+  color: #FFF;
+  border-bottom: 2px solid white;
+}
+table.topbanner a {
+  color: #FFF;
+  border-bottom:1px solid #000;
+  padding: 2px 2px 2px 2px;
+  background:#555;
+  text-decoration:none;
+}
+h1 {
+  margin:0;
+  padding-top: 6px;
+}
+h2 {
+  margin:0 0 4px;
+}
+
+#optionsbar {
+	clear:both;
+	background:#092E3A;
+	border-top:2px solid #000;
+	border-bottom:2px solid #000;
+	margin:0;
+  padding:5px 10px;
+	text-align:right;
+}
+
+#nav ul {
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+#nav li {
+  display:inline;
+  margin:0;
+  padding:0;
+}
+
+#container-main {
+  float:left;
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+#container-sidebar {
+  float:left;
+  position: relative;
+  width: 100%;
+  right: 80%;
+}
+
+#main {
+  float:left;
+  width:80%;
+  position: relative;
+  left: 80%;
+}
+
+table.diff {
+  color: #000;
+  table-layout:fixed;
+  word-wrap: break-word;
+  font-family: "Courier";
+}
+
+table .insert {white-space: pre-wrap; background-color: #99FFB6;}
+table .delete {white-space: pre-wrap; background-color: #FF9999;}
+table .replace {white-space: pre-wrap; background-color: #FFFEB2;}
+table .equal {white-space: pre-wrap;}
+
+th{font-size:10pt;}
+td{font-size:9pt;}
+
+th.fixed {
+  width:40px;
+}
+
+tr.commentHolder {
+  font-family: "Helvetica";
+}
+
+.comment {
+  background-color:#FFFFE7;
+  border:1px solid #000;
+  padding:0px 10px;
+}
+
+.comment p {
+  margin: 5px 0px;
+}
+
+.comment-reply {
+  margin:5px 0 5px 15px;
+}
+
+#sidebar {
+  float:left;
+  width:20%;
+  position: relative;
+  left: 80%;
+  background:#bbb;
+}
+
+#footer {
+  clear:both;
+  background:#11181E;
+  padding:5px 10px;
+}
+#footer p {
+  margin:0;
+}
+

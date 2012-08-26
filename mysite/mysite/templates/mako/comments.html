@@ -1,0 +1,22 @@
+<%inherit file="diff-base.html"/>
+
+<%block name="title">${parent.title()}Diff</%block>
+
+<%block name="header">${parent.header()}
+<h1>Comments for ${name}</h1>
+</%block>
+
+<%block name="mainpanel">
+<table>
+<tbody>
+  %for (file, comment_list) in comments.items():
+    %for comment in comment_list:
+      %if loop.first:
+        <tr><td><b>${file}</b></td></tr>
+      %endif
+      <tr><td>${comment}</td></tr>
+    %endfor
+  %endfor
+</tbody>
+</table>
+</%block>

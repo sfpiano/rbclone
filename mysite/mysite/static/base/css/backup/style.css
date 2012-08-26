@@ -1,0 +1,9 @@
+.comment {
+  background-color:#FFFFE7;
+  border:1px solid #000;
+  padding:0px 10px;
+}
+
+.comment-reply {
+  margin:5px 0 5px 15px;
+}

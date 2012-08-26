@@ -1,0 +1,16 @@
+<h1>Contact us</h1>
+
+%if form.errors:
+    <p style="color: red;">
+        Please correct the error${form.errors|pluralize} below.
+    </p>
+%endif 
+
+<form action="/diff/${set_id}/diff/${file_id}/comment/" method="post" id="commentForm">
+  <div style="display:none"><input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token}" /></div>
+  <table>
+      ${form}
+  </table>
+  <input type="hidden" name="comment_id" id="comment_id" value="0">
+  <input type="submit" name="create" value="Submit">
+</form>

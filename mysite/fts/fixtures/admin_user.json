@@ -1,0 +1,65 @@
+[
+  {
+    "pk": 1, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "sfiorell", 
+      "first_name": "", 
+      "last_name": "", 
+      "is_active": true, 
+      "is_superuser": true, 
+      "is_staff": true, 
+      "last_login": "2012-05-19T23:59:50.499Z", 
+      "groups": [
+        1, 
+        2
+      ], 
+      "user_permissions": [], 
+      "password": "pbkdf2_sha256$10000$YL2VktsjhL19$OaqJDiNzXWBP0WBv6lEkd00r8fG5cZRVxlxVS/5VRXc=", 
+      "email": "sfiorell@localhost.com", 
+      "date_joined": "2012-03-31T22:09:24Z"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "tcsuser", 
+      "first_name": "", 
+      "last_name": "", 
+      "is_active": true, 
+      "is_superuser": false, 
+      "is_staff": false, 
+      "last_login": "2012-05-11T20:42:36Z", 
+      "groups": [
+        1
+      ], 
+      "user_permissions": [], 
+      "password": "pbkdf2_sha256$10000$5g2HH31c2Ii4$sB07Y+9RmN+AnnXr0t3087yH7SY37mMpdmgFX04xRg0=", 
+      "email": "", 
+      "date_joined": "2012-05-03T02:04:11Z"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "stylebot", 
+      "first_name": "", 
+      "last_name": "", 
+      "is_active": true, 
+      "is_superuser": false, 
+      "is_staff": false, 
+      "last_login": "2012-05-18T22:32:59Z", 
+      "groups": [], 
+      "user_permissions": [
+        34, 
+        35, 
+        36
+      ], 
+      "password": "pbkdf2_sha256$10000$rkTTcsuACyX7$amRsstFV9oxXqNUDkUlvQFruPJKjJw3sM/59E5tH2Zw=", 
+      "email": "", 
+      "date_joined": "2012-05-18T22:32:59Z"
+    }
+  }
+]

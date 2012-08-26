@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block header %}{{block.super}}
+  {% block header_crumbs %}
+  <p><a href="/" title="Home">Home</a> &raquo; <a href="/r" title="Reviews">Reviews</a> &raquo; TCSU_LCR_XXXXX</p>
+  {% endblock %}
+  <p id="layoutdims">Options: <a href="#">Option 1</a> | <a href="#">Option 2</a> | <strong>Option 3</strong></p>
+{% endblock %}{#header#}
+
+
+{% block content_middle %}
+<div class="colleft">
+  <div class="col1">
+    {% block mainpanel %}
+    <!-- Column 1 start -->
+    <!-- Column 1 end -->
+    {% endblock %}
+  </div>
+  <div class="col2">
+    {% block sidebar %}
+    <!-- Column 2 start -->
+    <!-- Column 2 end -->
+    {% endblock %}
+  </div>
+</div>
+{% endblock %}{#content_middle#}

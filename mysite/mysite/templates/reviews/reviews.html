@@ -1,0 +1,22 @@
+{% extends "default-layout.html" %}
+
+{% block header %}
+{{block.super}}
+<h1>Reviews</h1>
+{% endblock %}{#header#}
+
+{% block sidebar %}{{block.super}}
+<li><a href="/r">All</a></li>
+<li><a href="?view=assigned">Assigned to Me</a></li>
+<li><a href="?view=authored">Authored by Me</a></li>
+{% endblock %}{#sidebar#}
+
+{% block mainpanel %}
+<table>
+<tbody>
+  {% for review in reviews %}
+  <tr><td><a href="/r/{{review.id}}/overview">{{review}}</a></td></tr>
+  {% endfor %}
+</tbody>
+</table>
+{% endblock %}{#mainpanel#}

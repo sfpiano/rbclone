@@ -1,0 +1,23 @@
+{% extends "default-layout.html" %}
+{% load staticfiles %}
+
+{% block css %} {{block.super}}
+<link rel="stylesheet" href="{% static "css/tree.css" %}" type="text/css" media="screen" />
+<link rel="stylesheet" href="{% static "css/style.css" %}" type="text/css" media="screen" />
+{% endblock %}
+
+{% block sidebar %}{{block.super}}
+<ol class="tree">
+  <li><a href="/r/{{ diffset.id }}/overview">Overview</a></li>
+  <li><a href="/r/{{ diffset.id }}/comments">Comments</a></li>
+  <li>
+    <label for="subfolder1">Subfolder 1</label>
+    <input type="checkbox" checked="yes" id="subfolder1" />
+    <ol>
+    {% for file in allfiles %}
+      <li class="file"><a href="/r/{{ diffset.id }}/diff/{{ file.id }}">{{ file.get_name }}</a></li>
+    {% endfor %}
+    </ol>
+  </li>
+</ol>
+{% endblock %}{#sidebar#}

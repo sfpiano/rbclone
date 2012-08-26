@@ -1,0 +1,32 @@
+{% extends "diff/diff-base.html" %}
+
+{% block header %}
+{{block.super}}
+<h1>{{ name }}</h1>
+{% endblock %}
+
+{% block mainpanel %}
+<h3>Title: {{ diffset.desc }}</h3>
+<hr/>
+<table>
+<tbody>
+  <tr><th>Author:</th><td>{{ diffset.author_id }}</td></tr>
+  <tr><th>Assignees:</th><td>
+    {% for status in gtg_status %}
+    {{ status.0 }} {{ status.1 }}, 
+    {% endfor %}
+  </td></tr>
+  <tr><th>Review Groups:</th><td>
+    {% for group in diffset.group_ids.all %}
+    {{ group }}
+    {% endfor %}
+  </td></tr>
+</tbody>
+</table>
+<hr/>
+<p>Problem Description:</p>
+<p>{{ diffset.problem }}</p>
+<p>Solution Description:</p>
+<p>{{ diffset.solution }}</p>
+{% endblock %}
+
